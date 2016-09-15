@@ -63,8 +63,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-            //TODO: figure out how to call/update the message content in the app once the data is received
-            //MainActivity.updateMsgContent(remoteMessage.getNotification().getBody());
+            //sendNotification(remoteMessage.getNotification().getBody());
+            sendIntent(remoteMessage.getNotification().getBody());
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
@@ -96,5 +96,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+    /**
+     * Send the message content to MainActivity to be displayed in the app's UI.
+     * @param msg string containing the content of the message
+     */
+    private void sendIntent(String msg){
+        Intent intent = new Intent(this, MainActivity.class);
+        //Note: without this flag, an exception is thrown. This flag allows a non-activity
+        //class to initiate an intent
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("msg", msg);
+        startActivity(intent);
     }
 }

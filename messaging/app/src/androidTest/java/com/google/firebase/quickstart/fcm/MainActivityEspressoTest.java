@@ -50,10 +50,10 @@ public class MainActivityEspressoTest {
         onView(withId(R.id.informationTextView)).check(matches(isDisplayed()));
 
         // Click subscribe button and check toast
-        onView(allOf(withId(R.id.subscribeButton), withText(R.string.subscribe_to_news)))
+        /*onView(allOf(withId(R.id.subscribeButton), withText(R.string.subscribe_to_news)))
                 .check(matches(isDisplayed()))
                 .perform(click());
-        confirmToastStartsWith(mActivityRule.getActivity().getString(R.string.msg_subscribed));
+        confirmToastStartsWith(mActivityRule.getActivity().getString(R.string.msg_subscribed));*/
 
         // Sleep so the Toast goes away, this is lazy but it works (Toast.LENGTH_SHORT = 2000)
         Thread.sleep(2000);

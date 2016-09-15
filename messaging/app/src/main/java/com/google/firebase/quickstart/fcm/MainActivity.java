@@ -16,6 +16,7 @@
 
 package com.google.firebase.quickstart.fcm;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -25,7 +26,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -67,10 +67,21 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-    public void updateMsgContent(String str){
+    @Override
+    protected void onNewIntent(Intent intent){
+        super.onNewIntent(intent);
+        setIntent(intent);
+        //capture the message content from the intent sent from MyFirebaseMessagingService
+        String msg = intent.getStringExtra("msg");
+        updateMsgContent(msg);
+    }
+    /**
+     * Display the message in the TextView in MainActivity's UI.
+     * @param msg
+     */
+    public void updateMsgContent(String msg){
         TextView txt = (TextView) findViewById(R.id.messageContent);
-        txt.setText(str);
+        txt.setText(msg);
     }
 
 }
